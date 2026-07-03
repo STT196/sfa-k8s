@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: redis
-        image: redis:7
-        imagePullPolicy: IfNotPresent
+        image: {{ .Values.redis.image }}
+        imagePullPolicy: {{ .Values.redis.imagePullPolicy }}
         ports:
         - containerPort: 6379
 

@@ -1,0 +1,42 @@
+app:
+  replicaCount: 3
+  healthCheckPath: /api/health
+
+redis:
+  image: redis:8.8.0
+  imagePullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 6379
+
+image:
+  repository: sfa
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: traefik
+  host: sfa.local
+
+env:
+  appName: "Malindu Foods SFA"
+  appEnv: "local"
+  appDebug: "true"
+  appUrl: "http://sfa.local"
+
+  dbHost: mysql
+  mysqlConnection: "mysql"
+  dbPort: "3306"
+  dbName: sfa_db
+
+  cacheDriver : "redis"
+  cacheTTL: "86400"
+
+  redisHost: redis
+  redisPort: "6379"
+

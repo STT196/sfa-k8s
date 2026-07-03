@@ -34,23 +34,27 @@ spec:
             ports:
               - containerPort: 3306
             env:
-              -name: DB_DATABASE
-               valueFrom:
-                configMapKeyRef:
-                  name: sfa-config
-                  key: DB_DATABASE
-
-              - name: DB_USERNAME
+              - name: MYSQL_DATABASE
+                valueFrom:
+                  configMapKeyRef:
+                    name: sfa-config
+                    key: DB_DATABASE
+              - name: MYSQL_USER
                 valueFrom:
                   secretKeyRef:
                     name: sfa-secret
                     key: DB_USERNAME
 
-              - name: DB_PASSWORD
+              - name: MYSQL_PASSWORD
                 valueFrom:
                   secretKeyRef:
                     name: sfa-secret
                     key: DB_PASSWORD
+              - name: MYSQL_ROOT_PASSWORD 
+                valueFrom:
+                  secretKeyRef:
+                    name: sfa-secret
+                    key: ROOT_PASSWORD
 
             volumeMounts:
               - name: mysql-persistent-storage

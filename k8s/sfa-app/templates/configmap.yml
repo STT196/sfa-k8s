@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sfa-config
+  namespace: sfa
+data:
+  APP_NAME: "{{ .Values.env.appName }}"
+  APP_ENV: "{{ .Values.env.appEnv }}"
+  APP_DEBUG: "{{ .Values.env.appDebug }}"
+  APP_URL: "{{ .Values.env.appUrl }}"
+  LOG_CHANNEL: "stack"
+  LOG_DEPRECATIONS_CHANNEL: ""
+  LOG_LEVEL: "debug"
+
+  DB_CONNECTION: "{{ .Values.env.mysqlConnection }}"
+  DB_HOST: "{{ .Values.env.dbHost }}"
+  DB_PORT: "{{ .Values.env.dbPort }}"
+  DB_DATABASE: "{{ .Values.env.dbName }}"
+
+  REDIS_HOST: "{{ .Values.env.redisHost }}"
+  REDIS_PORT: "{{ .Values.env.redisPort }}"
+  REDIS_PASSWORD: "{{ .Values.env.redisPassword }}"
+
+  JWT_NEVER_EXPIRE: "true"
+  JWT_NEVER_EXPIRE_TTL: "52560000"
+  JWT_REFRESH_TTL: "20160"
+
+  PRIVILEGE_CACHE_DRIVER: "{{ .Values.env.cacheDriver }}"
+  PRIVILEGE_CACHE_TTL: "{{ .Values.env.cacheTTL }}"

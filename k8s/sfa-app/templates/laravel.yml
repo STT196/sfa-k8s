@@ -4,7 +4,7 @@ metadata:
   name: sfa-app
   namespace: sfa
 spec:
-  replicas: 3
+  replicas: {{ .Values.app.replicaCount }}
   selector:
     matchLabels:
       app: sfa-app
@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: sfa-app
-          image: sfa:latest
-          imagePullPolicy: never
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
             - containerPort: 80
           env:
@@ -58,6 +58,11 @@ spec:
                 configMapKeyRef:
                   name: sfa-config
                   key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: sfa-config
+                  key: DB_PORT
             - name: DB_DATABASE
               valueFrom:
                 configMapKeyRef:
@@ -84,10 +89,15 @@ spec:
                 configMapKeyRef:
                   name: sfa-config
                   key: REDIS_PORT
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sfa-secret
+                  key: REDIS_PASSWORD
 
           readinessProbe:
             httpGet:
-              path: /
+              path: {{ .Values.app.healthCheckPath }}
               port: 80
             initialDelaySeconds: 20
             periodSeconds: 10
@@ -95,7 +105,7 @@ spec:
 
           livenessProbe:
             httpGet:
-              path: /
+              path: {{ .Values.app.healthCheckPath }}
               port: 80
             initialDelaySeconds: 40
             periodSeconds: 20
