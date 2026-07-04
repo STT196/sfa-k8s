@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: sfa-app-monitor
+  namespace: sfa
+  labels:
+    release: prometheus-stack   # Must match the Helm release name
+spec:
+  selector:
+    matchLabels:
+      app: sfa-app              # Selects your app's Service
+  endpoints:
+    - port: http               # The port name in your Service (or number)
+      path: /metrics
+      interval: 15s
