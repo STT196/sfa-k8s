@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-exporter
+  namespace: sfa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-exporter
+  template:
+    metadata:
+      labels:
+        app: redis-exporter
+    spec:
+      containers:
+        - name: redis-exporter
+          image: oliver006/redis_exporter:latest
+          args:
+            - "--redis.addr=redis://redis:6379"   # service name of your Redis
+            - "--redis.password="                 # if no password, leave empty
+          ports:
+            - containerPort: 9121
+          env:
+            - name: REDIS_ADDR
+              value: redis://redis:6379

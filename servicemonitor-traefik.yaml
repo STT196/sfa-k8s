@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: traefik
+  namespace: traefik
+  labels:
+    release: prometheus-stack   # MUST match your Helm release name
+spec:
+  selector:
+    matchLabels:
+      app: traefik              # Matches your Service's labels
+  endpoints:
+    - port: metrics             # Must match the port name in the Service
+      path: /metrics
+      interval: 15s
