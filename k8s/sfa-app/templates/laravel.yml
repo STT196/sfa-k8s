@@ -94,7 +94,11 @@ spec:
                 secretKeyRef:
                   name: sfa-secret
                   key: REDIS_PASSWORD
-
+            - name: SESSION_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  name: sfa-config
+                  key: SESSION_DRIVER
           readinessProbe:
             httpGet:
               path: {{ .Values.app.healthCheckPath }}

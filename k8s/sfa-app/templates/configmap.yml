@@ -11,7 +11,8 @@ data:
   LOG_CHANNEL: "stack"
   LOG_DEPRECATIONS_CHANNEL: ""
   LOG_LEVEL: "debug"
-
+  SESSION_DRIVER: "redis"
+  
   DB_CONNECTION: "{{ .Values.env.mysqlConnection }}"
   DB_HOST: "{{ .Values.env.dbHost }}"
   DB_PORT: "{{ .Values.env.dbPort }}"
