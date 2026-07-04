@@ -29,7 +29,8 @@ spec:
       spec:
         containers:
           - name: mysql
-            image: mysql:8.4.9
+            image: "{{ .Values.mysql.image }}"
+            imagePullPolicy: "{{ .Values.mysql.imagePullPolicy }}"
             ports:
               - containerPort: 3306
             env:
